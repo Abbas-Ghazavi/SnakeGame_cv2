@@ -201,51 +201,14 @@ class SnakeGameClass:
     def displayGUI(self, imgMain):
 
         x_food, y_food = self.indexToPixel(self.foodPoint)
+        # تنظیم مختصات مستطیل غذا
+        x_food_rect = x_food - self.foodIcon.shape[1] // 2
+        y_food_rect = y_food - self.foodIcon.shape[0] // 2
+        x_food_rect_end = x_food_rect + self.foodIcon.shape[1]
+        y_food_rect_end = y_food_rect + self.foodIcon.shape[0]
 
-        
-
-        # ابعاد عکس foodIcon را به دست می‌آوریم
-
-        foodIcon_height, foodIcon_width, _ = self.foodIcon.shape
-
-
-
-        # اندازه باکس غذا را بر اساس ابعاد عکس foodIcon تنظیم می‌کنیم
-
-        box_height = foodIcon_height   # اضافه کردن 10 پیکسل به ارتفاع برای فضای کافی بالا و پایین
-
-        box_width = foodIcon_width   # اضافه کردن 10 پیکسل به عرض برای فضای کافی راست و چپ
-
-
-
-        # عکس foodIcon را در باکس غذا نمایش می‌دهیم
-
-        imgMain[y_food:y_food + box_height, x_food:x_food + box_width] = self.foodIcon
-
-        
-
-        marginColor = (0, 255, 0)
-
-        marginThick = 5
-
-        snakeColor = (0, 0, 0)
-
-        headColor = (0, 255, 0)
-
-
-
-        imgMain = cv.rectangle(imgMain,
-
-                                (self.backSize[0] // 2 - self.gameSize[0] // 2 - self.margin + 1, 1 * self.margin + 1),
-
-                                (self.backSize[0] // 2 + self.gameSize[0] // 2 + self.margin,
-
-                                3 * self.margin + self.gameSize[1]),
-
-                                marginColor, marginThick)
-
-
-
+        # قسمت مربوط به نمایش غذا را به تصویر اصلی اضافه می‌کنیم
+        imgMain[y_food_rect:y_food_rect_end, x_food_rect:x_food_rect_end] = self.foodIcon
         if self.gameOver:
 
             cv.putText(imgMain, "You Lose Press R for Restart", (400, 200), cv.FONT_HERSHEY_DUPLEX, 1, (0, 0, 255), 2, cv.LINE_AA)
