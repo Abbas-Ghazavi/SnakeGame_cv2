@@ -229,18 +229,15 @@ class SnakeGameClass:
         return imgMain
 
     def drawSquare(self, imgMain, position, color, fill=False):
-        
         n = self.gameSize[0] // self.numTile
         if (self.high_score <= self.score):
             self.high_score = self.score
         i, j = position
-        n = self.gameSize[0] // self.numTile
-        cv.putText(imgMain, str("Score : " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
-        imgMain = cv.rectangle(imgMain, (self.backSize[0] // 2 - self.gameSize[0] // 2 + n * i + 1,
-                                         2 * self.margin + n * j + 1),
-                               (self.backSize[0] // 2 - self.gameSize[0] // 2 + n * (i + 1),
-                                2 * self.margin + n * (j + 1)),
-                               color, thickness)
+        cv.rectangle(imgMain, (self.backSize[0] // 2 - self.gameSize[0] // 2 + n * i + 1,
+                               2 * self.margin + n * j + 1),
+                     (self.backSize[0] // 2 - self.gameSize[0] // 2 + n * (i + 1),
+                      2 * self.margin + n * (j + 1)),
+                     color, -1 if fill else 2)
         return imgMain
 
 
