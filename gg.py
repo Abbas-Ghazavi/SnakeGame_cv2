@@ -229,10 +229,8 @@ class SnakeGameClass:
         return imgMain
 
     def drawSquare(self, imgMain, position, color, fill=False):
-        if fill == True:
-            thickness = 2
-        else:
-            thickness = -2
+        
+        n = self.gameSize[0] // self.numTile
         if (self.high_score <= self.score):
             self.high_score = self.score
         i, j = position
