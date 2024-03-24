@@ -224,7 +224,7 @@ class SnakeGameClass:
 
             imgMain = self.drawSquare(imgMain, point, color)
 
-
+        cv.putText(imgMain, str("Score: " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
 
         return imgMain
 
