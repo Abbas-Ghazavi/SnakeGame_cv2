@@ -209,6 +209,7 @@ class SnakeGameClass:
 
         # قسمت مربوط به نمایش غذا را به تصویر اصلی اضافه می‌کنیم
         imgMain[y_food_rect:y_food_rect_end, x_food_rect:x_food_rect_end] = self.foodIcon
+
         if self.gameOver:
 
             cv.putText(imgMain, "You Lose Press R for Restart", (400, 200), cv.FONT_HERSHEY_DUPLEX, 1, (0, 0, 255), 2, cv.LINE_AA)
@@ -219,7 +220,7 @@ class SnakeGameClass:
 
         for i, point in enumerate(self.points):
 
-            color = snakeColor if i != len(self.points) - 1 else headColor
+            color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
 
             imgMain = self.drawSquare(imgMain, point, color)
 
