@@ -27,7 +27,7 @@ class SnakeGameClass:
         self.snakeSpeed = 0.20
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
         self.foodIcon = cv.cvtColor(self.foodIcon, cv.COLOR_RGBA2RGB)
-        self.foodIcon = cv.resize(self.foodIcon, (23, 23))
+        self.foodIcon = cv.resize(self.foodIcon, (15, 15))
 
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands()
