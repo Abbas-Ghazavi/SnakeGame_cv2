@@ -216,7 +216,16 @@ class SnakeGameClass:
 
             cv.putText(imgMain, "Best Score : " + str(self.high_score), (520, 280), cv.FONT_HERSHEY_DUPLEX, 1, (200, 0, 0), 2, cv.LINE_AA)
 
+        head_pos = self.points[-1]
+        n = self.gameSize[0] // self.numTile
 
+        head_x = self.backSize[0] // 2 - self.gameSize[0] // 2 + n * head_pos[0] + 1
+
+        head_y = 2 * self.margin + n * head_pos[1] + 1
+
+        head_size = n - 2
+
+        cv.rectangle(imgMain, (head_x, head_y), (head_x + head_size, head_y + head_size), (0, 255, 0), -1)
 
         for i, point in enumerate(self.points):
 
@@ -224,20 +233,27 @@ class SnakeGameClass:
 
             imgMain = self.drawSquare(imgMain, point, color)
 
-        cv.putText(imgMain, str("Score: " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
+        # cv.putText(imgMain, str("Score: " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
 
         return imgMain
 
     def drawSquare(self, imgMain, position, color, fill=False):
-        n = self.gameSize[0] // self.numTile
+        if fill == True:
+            thickness = 2
+        else:
+            thickness = -2
         if (self.high_score <= self.score):
             self.high_score = self.score
         i, j = position
-        cv.rectangle(imgMain, (self.backSize[0] // 2 - self.gameSize[0] // 2 + n * i + 1,
-                               2 * self.margin + n * j + 1),
-                     (self.backSize[0] // 2 - self.gameSize[0] // 2 + n * (i + 1),
-                      2 * self.margin + n * (j + 1)),
-                     color, -1 if fill else 2)
+        n = self.gameSize[0] // self.numTile
+        cv.putText(imgMain, str("Score : " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
+        imgMain = cv.rectangle(imgMain,
+
+                                (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin),
+
+                                (self.backSize[0] // 2 + self.gameSize[0] // 2, 2 * self.margin + self.gameSize[1]),
+
+                                (0, 255, 0), 2)
         return imgMain
 
 
