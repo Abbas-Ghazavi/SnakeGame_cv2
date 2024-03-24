@@ -18,9 +18,7 @@ class SnakeGameClass:
         self.score = 0
         self.gameOver = False
         self.gameStart = False
-
         self.direction = ''
-
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
@@ -226,9 +224,7 @@ class SnakeGameClass:
     def drawSquare(self, imgMain, position, color, fill=False):
 
         n = self.gameSize[0] // self.numTile
-
         i, j = position
-
         cv.rectangle(imgMain, (390 + n * i + 1, 5 + n * j + 1), (390 + n * (i + 1), 5 + n * (j + 1)), color, -1 if fill else 2)
         if (self.high_score <= self.score):
             self.high_score = self.score
@@ -243,7 +239,6 @@ class SnakeGameClass:
 
                                 (0, 255, 0), 2)
         return imgMain
-
 
 game = SnakeGameClass()
 game.start()
