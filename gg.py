@@ -4,7 +4,6 @@ import mediapipe as mp
 import time
 
 font = cv.FONT_HERSHEY_DUPLEX
-#test
 class SnakeGameClass:
     def __init__(self):
         self.backSize = (1280, 1280)
@@ -207,7 +206,6 @@ class SnakeGameClass:
         x_food_rect_end = x_food_rect + self.foodIcon.shape[1]
         y_food_rect_end = y_food_rect + self.foodIcon.shape[0]
 
-        # قسمت مربوط به نمایش غذا را به تصویر اصلی اضافه می‌کنیم
         imgMain[y_food_rect:y_food_rect_end, x_food_rect:x_food_rect_end] = self.foodIcon
 
         if self.gameOver:
@@ -222,8 +220,6 @@ class SnakeGameClass:
             color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
 
             imgMain = self.drawSquare(imgMain, point, color)
-
-        # cv.putText(imgMain, str("Score: " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
 
         return imgMain
 
