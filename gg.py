@@ -30,13 +30,15 @@ class SnakeGameClass:
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
 
-    def start(self , x  , y, w,h):
-        cap = cv.VideoCapture(0)
-        cap.set(3, 1280)
-        cap.set(4, 720)
+        self.cap = cv.VideoCapture(0)
+        self.cap.set(3, 1280)
+        self.cap.set(4, 720)
 
+        self.imgMain = None
+
+    def start(self , x  , y, w,h):
         while True:
-            success, img = cap.read()
+            success, img = self.cap.read()
             img = cv.flip(img, 1)
             cropped_img = img[y:y+h , x:x+w]
 
@@ -55,9 +57,8 @@ class SnakeGameClass:
             if self.isTimeToMoveSnake():
                 self.update()
 
-            img = self.displayGUI(img)
-            cv.imshow("Image", img)
-            cv.imshow("Image", cropped_img)
+            self.imgMain = self.displayGUI(img)
+            cv.imshow("Snake Game", cropped_img)
 
             key = cv.waitKey(1)
             if key == ord('r'):
@@ -65,7 +66,7 @@ class SnakeGameClass:
                 print('reset')
             elif key == 27:
                 cv.destroyAllWindows()
-                cap.release()
+                self.cap.release()
                 print('break')
                 break
 
@@ -197,7 +198,7 @@ class SnakeGameClass:
         self.gameStart = False
         return 0
 
-    def displayGUI(self, imgMain):
+    def displayGUI(self,imgMain):
 
         x_food, y_food = self.indexToPixel(self.foodPoint)
         # تنظیم مختصات مستطیل غذا
@@ -245,3 +246,4 @@ class SnakeGameClass:
 game = SnakeGameClass()
 x , y ,w , h=391,10,500,541
 game.start(x,y,w,h)
+
