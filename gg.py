@@ -30,7 +30,7 @@ class SnakeGameClass:
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
 
-    def start(self):
+    def start(self , x  , y, w,h):
         cap = cv.VideoCapture(0)
         cap.set(3, 1280)
         cap.set(4, 720)
@@ -38,6 +38,7 @@ class SnakeGameClass:
         while True:
             success, img = cap.read()
             img = cv.flip(img, 1)
+            cropped_img = img[y:y+h , x:x+w]
 
             imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
             results = self.hands.process(imgRGB)
@@ -56,6 +57,7 @@ class SnakeGameClass:
 
             img = self.displayGUI(img)
             cv.imshow("Image", img)
+            cv.imshow("Image", cropped_img)
 
             key = cv.waitKey(1)
             if key == ord('r'):
@@ -230,7 +232,7 @@ class SnakeGameClass:
             self.high_score = self.score
         i, j = position
         n = self.gameSize[0] // self.numTile
-        cv.putText(imgMain, str("Score : " + str(self.score)), (560, 580), font, 1, (0, 255, 0), 2, cv.LINE_AA)
+        cv.putText(imgMain, str("Score : " + str(self.score)), (560, 540), font, 1, (0, 255, 0), 2, cv.LINE_AA)
         imgMain = cv.rectangle(imgMain,
 
                                 (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin),
@@ -241,4 +243,5 @@ class SnakeGameClass:
         return imgMain
 
 game = SnakeGameClass()
-game.start()
+x , y ,w , h=391,10,500,541
+game.start(x,y,w,h)
