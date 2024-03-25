@@ -36,7 +36,8 @@ class SnakeGameClass:
 
         self.imgMain = None
 
-    def start(self , x  , y, w,h):
+    def start(self):
+        x , y ,w , h=391,10,500,541
         while True:
             success, img = self.cap.read()
             img = cv.flip(img, 1)
@@ -244,6 +245,5 @@ class SnakeGameClass:
         return imgMain
 
 game = SnakeGameClass()
-x , y ,w , h=391,10,500,541
-game.start(x,y,w,h)
+game.start()
 
