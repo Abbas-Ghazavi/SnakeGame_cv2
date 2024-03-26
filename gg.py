@@ -215,8 +215,7 @@ class SnakeGameClass:
             cv.putText(imgMain, "You Lose Press R for Restart", (400, 200), cv.FONT_HERSHEY_DUPLEX, 1, (0, 0, 255), 2, cv.LINE_AA)
 
             cv.putText(imgMain, "Best Score : " + str(self.high_score), (520, 280), cv.FONT_HERSHEY_DUPLEX, 1, (200, 0, 0), 2, cv.LINE_AA)
-
-
+            
         for i, point in enumerate(self.points):
             #need bold move
             color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
