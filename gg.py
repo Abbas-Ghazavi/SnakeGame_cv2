@@ -2,7 +2,7 @@ import random
 import cv2 as cv
 import mediapipe as mp
 import time
-
+#add icon for game
 font = cv.FONT_HERSHEY_DUPLEX
 #fix bug png 
 class SnakeGameClass:
