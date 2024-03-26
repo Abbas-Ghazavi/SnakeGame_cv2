@@ -226,7 +226,6 @@ class SnakeGameClass:
         return imgMain
 
     def drawSquare(self, imgMain, position, color, fill=False):
-
         n = self.gameSize[0] // self.numTile
         i, j = position
         cv.rectangle(imgMain, (390 + n * i + 1, 5 + n * j + 1), (390 + n * (i + 1), 5 + n * (j + 1)), color, -1 if fill else 2)
@@ -243,7 +242,6 @@ class SnakeGameClass:
 
                                 (0, 255, 0), 2)
         return imgMain
-
 game = SnakeGameClass()
 game.start()
 
