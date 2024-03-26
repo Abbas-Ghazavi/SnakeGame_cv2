@@ -217,7 +217,7 @@ class SnakeGameClass:
 
 
         for i, point in enumerate(self.points):
-
+            #need bold move
             color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
 
             imgMain = self.drawSquare(imgMain, point, color)
