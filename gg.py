@@ -28,11 +28,9 @@ class SnakeGameClass:
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
-
         self.cap = cv.VideoCapture(0)
         self.cap.set(3, 1280)
         self.cap.set(4, 720)
-
         self.imgMain = None
 
     def start(self):
