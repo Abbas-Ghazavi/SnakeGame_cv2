@@ -4,6 +4,7 @@ import mediapipe as mp
 import time
 
 font = cv.FONT_HERSHEY_DUPLEX
+#fix bug png 
 class SnakeGameClass:
     def __init__(self):
         self.backSize = (1280, 1280)
