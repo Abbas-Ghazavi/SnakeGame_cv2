@@ -201,6 +201,7 @@ class SnakeGameClass:
 
         x_food, y_food = self.indexToPixel(self.foodPoint)
         # تنظیم مختصات مستطیل غذا
+        #new bug bad size food in window
         x_food_rect = x_food - self.foodIcon.shape[1] // 2
         y_food_rect = y_food - self.foodIcon.shape[0] // 2
         x_food_rect_end = x_food_rect + self.foodIcon.shape[1]
