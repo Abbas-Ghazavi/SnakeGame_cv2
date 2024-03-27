@@ -212,6 +212,7 @@ class SnakeGameClass:
             n = self.gameSize[0] // self.numTile
             imgMain[y_food:y_food + 20, x_food:x_food + 20] = self.foodIcon[:, :, :3] * (self.foodMask[:, :, None] / 255.0) + imgMain[y_food:y_food + 20, x_food:x_food + 20] * (1.0 - self.foodMask[:, :, None] / 255.0)
 
+
             imgMain = self.drawSnake(imgMain, self.points, (0, 255, 0))
 
         cv.putText(imgMain, str("Score : " + str(self.score)), (560, 540), font, 1, (0, 255, 0), 2, cv.LINE_AA)
@@ -224,9 +225,24 @@ class SnakeGameClass:
     def drawSnake(self, imgMain, points, color):
         n = self.gameSize[0] // self.numTile
         for i in range(len(points) - 1):
-            pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.2)))
-            pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.2)))
+            pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.5)))
+            pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.5)))
             cv.line(imgMain, pt1, pt2, color, thickness=n)
+        
+        # Drawing head
+        head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
+        cv.circle(imgMain, head_pt, n // 2, color, thickness=-1)
+
+        # Drawing eyes
+        eye1_center = (head_pt[0] - n // 4, head_pt[1] - n // 4)
+        eye2_center = (head_pt[0] + n // 4, head_pt[1] - n // 4)
+        eye_radius = n // 8
+        cv.circle(imgMain, eye1_center, eye_radius, (255, 255, 255), thickness=-1)
+        cv.circle(imgMain, eye2_center, eye_radius, (255, 255, 255), thickness=-1)
+
+        # Drawing mouth (smile)
+        cv.ellipse(imgMain, (head_pt[0], head_pt[1] + n // 3), (n // 4, n // 6), 0, 0, 180, (255, 255, 255), -1)
+
         return imgMain
 
 game = SnakeGameClass()
