@@ -23,7 +23,7 @@ class SnakeGameClass:
         self.snakeSpeed = 0.20
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
         self.foodIcon = cv.cvtColor(self.foodIcon, cv.COLOR_RGBA2RGB)
-        self.foodIcon = cv.resize(self.foodIcon, (23, 23))
+        self.foodIcon = cv.resize(self.foodIcon, (20, 20))
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
@@ -198,25 +198,21 @@ class SnakeGameClass:
         return 0
 
     def displayGUI(self, imgMain):
-
-        x_food, y_food = self.indexToPixel(self.foodPoint)
-
-        n = self.gameSize[0] // self.numTile
-
-        cv.rectangle(imgMain, (x_food, y_food), (x_food + n, y_food + n), (0, 0, 255), -1)
-
         if self.gameOver:
-
             cv.putText(imgMain, "You Lose Press R for Restart", (400, 200), cv.FONT_HERSHEY_DUPLEX, 1, (0, 0, 255), 2, cv.LINE_AA)
-
             cv.putText(imgMain, "Best Score : " + str(self.high_score), (520, 280), cv.FONT_HERSHEY_DUPLEX, 1, (200, 0, 0), 2, cv.LINE_AA)
+        else:
+            x_food, y_food = self.indexToPixel(self.foodPoint)
+            n = self.gameSize[0] // self.numTile
+            # نمایش عکس غذا
+            imgMain[y_food:y_food + n, x_food:x_food + n] = self.foodIcon
 
         for i, point in enumerate(self.points):
-            #need bold move
             color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
-
             imgMain = self.drawSquare(imgMain, point, color)
 
+        cv.putText(imgMain, str("Score : " + str(self.score)), (560, 540), font, 1, (0, 255, 0), 2, cv.LINE_AA)
+        imgMain = cv.rectangle(imgMain, (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin), (self.backSize[0] // 2 + self.gameSize[0] // 2, 2 * self.margin + self.gameSize[1]), (0, 255, 0), 2)
         return imgMain
 
     def drawSquare(self, imgMain, position, color, fill=False):
