@@ -2,7 +2,9 @@ import random
 import cv2 as cv
 import mediapipe as mp
 import time
+
 font = cv.FONT_HERSHEY_DUPLEX
+
 class SnakeGameClass:
     def __init__(self):
         self.backSize = (1280, 1280)
@@ -21,9 +23,12 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
+
+        # خواندن تصویر با کانال آلفا (ترنسپرنت)
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
-        self.foodIcon = cv.cvtColor(self.foodIcon, cv.COLOR_RGBA2RGB)
-        self.foodIcon = cv.resize(self.foodIcon, (20, 20))
+        self.foodIcon = cv.resize(self.foodIcon, (20, 20))  # تغییر اندازه تصویر به اندازه مورد نظر
+        self.foodMask = self.foodIcon[:, :, 3]  # ماسک کانال آلفا
+
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
@@ -33,11 +38,11 @@ class SnakeGameClass:
         self.imgMain = None
 
     def start(self):
-        x , y ,w , h=391,10,500,541
+        x, y, w, h = 391, 10, 500, 541
         while True:
             success, img = self.cap.read()
             img = cv.flip(img, 1)
-            cropped_img = img[y:y+h , x:x+w]
+            cropped_img = img[y:y+h, x:x+w]
 
             imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
             results = self.hands.process(imgRGB)
@@ -204,8 +209,8 @@ class SnakeGameClass:
         else:
             x_food, y_food = self.indexToPixel(self.foodPoint)
             n = self.gameSize[0] // self.numTile
-            # نمایش عکس غذا
-            imgMain[y_food:y_food + n, x_food:x_food + n] = self.foodIcon
+            # نمایش عکس غذا با استفاده از کانال آلفا
+            imgMain[y_food:y_food + 20, x_food:x_food + 20] = self.foodIcon[:, :, :3] * (self.foodMask[:, :, None] / 255.0) + imgMain[y_food:y_food + 20, x_food:x_food + 20] * (1.0 - self.foodMask[:, :, None] / 255.0)
 
         for i, point in enumerate(self.points):
             color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
@@ -225,12 +230,11 @@ class SnakeGameClass:
         n = self.gameSize[0] // self.numTile
         cv.putText(imgMain, str("Score : " + str(self.score)), (560, 540), font, 1, (0, 255, 0), 2, cv.LINE_AA)
         imgMain = cv.rectangle(imgMain,
-
                                 (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin),
-
                                 (self.backSize[0] // 2 + self.gameSize[0] // 2, 2 * self.margin + self.gameSize[1]),
-
                                 (0, 255, 0), 2)
         return imgMain
+
 game = SnakeGameClass()
 game.start()
+
