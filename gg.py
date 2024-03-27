@@ -234,4 +234,3 @@ class SnakeGameClass:
         return imgMain
 game = SnakeGameClass()
 game.start()
-
