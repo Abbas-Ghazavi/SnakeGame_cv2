@@ -1,4 +1,5 @@
 import random
+import numpy as np
 import cv2 as cv
 import mediapipe as mp
 import time
@@ -220,10 +221,38 @@ class SnakeGameClass:
         imgMain = cv.rectangle(imgMain, (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin), (self.backSize[0] // 2 + self.gameSize[0] // 2, 2 * self.margin + self.gameSize[1]), (0, 255, 0), 2)
         return imgMain
 
-    def drawSquare(self, imgMain, position, color, fill=False):
+    def drawSquare(self, imgMain, position, fill=False):
         n = self.gameSize[0] // self.numTile
         i, j = position
-        cv.rectangle(imgMain, (390 + n * i + 1, 5 + n * j + 1), (390 + n * (i + 1), 5 + n * (j + 1)), color, -1 if fill else 2)
+        
+        # تعیین مقدار اولیه برای رنگ
+        hue = self.score % 180  # مقدار حالت رنگ براساس امتیاز
+        
+        # افزایش یا کاهش مقدار حالت رنگ
+        hue += 1  # می‌توانید مقدار این تغییر را تنظیم کنید
+        
+        # تبدیل مقدار حالت رنگ به مقدار معتبر در فضای رنگ HSV (0-180)
+        hue = hue % 180
+        
+        # تبدیل مقدار حالت رنگ و مقادیر دیگر HSV به فضای رنگ BGR
+        color = cv.cvtColor(np.uint8([[[hue, 255, 255]]]), cv.COLOR_HSV2BGR)[0][0]
+        
+        # تبدیل مقدار رنگ به فرمت tuple برای استفاده در تابع cv.fillPoly
+        color = tuple(int(c) for c in color)
+
+        # تبدیل موقعیت بلوک به مختصات گوشه‌های مربع
+        x = 390 + n * i
+        y = 5 + n * j
+        x1, y1 = x + 1, y + 1
+        x2, y2 = x + n - 1, y + n - 1
+        
+        # ایجاد مربع
+        pts = np.array([(x1, y1), (x2, y1), (x2, y2), (x1, y2)], np.int32)
+        pts = pts.reshape((-1, 1, 2))
+        
+        # رسم مربع به عنوان یک چند ضلعی
+        cv.fillPoly(imgMain, [pts], color)
+        
         if (self.high_score <= self.score):
             self.high_score = self.score
         i, j = position
