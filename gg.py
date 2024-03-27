@@ -1,6 +1,7 @@
 import random
 import cv2 as cv
 import mediapipe as mp
+import time
 font = cv.FONT_HERSHEY_DUPLEX
 class SnakeGameClass:
     def __init__(self):
@@ -20,7 +21,6 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
-        #fix location image
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
         self.foodIcon = cv.cvtColor(self.foodIcon, cv.COLOR_RGBA2RGB)
         self.foodIcon = cv.resize(self.foodIcon, (23, 23))
@@ -198,8 +198,6 @@ class SnakeGameClass:
     def displayGUI(self,imgMain):
 
         x_food, y_food = self.indexToPixel(self.foodPoint)
-        # تنظیم مختصات مستطیل غذا
-        #new bug bad size food in window
         x_food_rect = x_food - self.foodIcon.shape[1] // 2
         y_food_rect = y_food - self.foodIcon.shape[0] // 2
         x_food_rect_end = x_food_rect + self.foodIcon.shape[1]
