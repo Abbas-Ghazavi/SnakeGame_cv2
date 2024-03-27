@@ -169,14 +169,16 @@ class SnakeGameClass:
         return 0
 
     def indexToPixel(self, index):
+
         i, j = index
-        a, _ = self.backSize
-        c, _ = self.gameSize
-        e = self.margin
-        f = c // self.numTile
-        x_new = a / 2 - c / 2 + f * (i + 1 / 2) + 1 / 2
-        y_new = 2 * e + f * (j + 1 / 2) + 1 / 2
-        return int(x_new), int(y_new)
+
+        n = self.gameSize[0] // self.numTile
+
+        x_new = 390 + n * i + 1
+
+        y_new = 5 + n * j + 1
+
+        return x_new, y_new
 
     def isTimeToMoveSnake(self):
         self.currentTime = time.time()
@@ -195,14 +197,13 @@ class SnakeGameClass:
         self.gameStart = False
         return 0
 
-    def displayGUI(self,imgMain):
+    def displayGUI(self, imgMain):
 
         x_food, y_food = self.indexToPixel(self.foodPoint)
-        x_food_rect = x_food - self.foodIcon.shape[1] // 2
-        y_food_rect = y_food - self.foodIcon.shape[0] // 2
-        x_food_rect_end = x_food_rect + self.foodIcon.shape[1]
-        y_food_rect_end = y_food_rect + self.foodIcon.shape[0]
-        imgMain[y_food_rect:y_food_rect_end, x_food_rect:x_food_rect_end] = self.foodIcon
+
+        n = self.gameSize[0] // self.numTile
+
+        cv.rectangle(imgMain, (x_food, y_food), (x_food + n, y_food + n), (0, 0, 255), -1)
 
         if self.gameOver:
 
