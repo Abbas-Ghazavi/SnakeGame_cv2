@@ -210,58 +210,23 @@ class SnakeGameClass:
         else:
             x_food, y_food = self.indexToPixel(self.foodPoint)
             n = self.gameSize[0] // self.numTile
-            # نمایش عکس غذا با استفاده از کانال آلفا
             imgMain[y_food:y_food + 20, x_food:x_food + 20] = self.foodIcon[:, :, :3] * (self.foodMask[:, :, None] / 255.0) + imgMain[y_food:y_food + 20, x_food:x_food + 20] * (1.0 - self.foodMask[:, :, None] / 255.0)
 
-        for i, point in enumerate(self.points):
-            color = (0, 0, 0) if i != len(self.points) - 1 else (0, 255, 0)
-            imgMain = self.drawSquare(imgMain, point, color)
+            imgMain = self.drawSnake(imgMain, self.points, (0, 255, 0))
 
-        cv.putText(imgMain, str("Score : " + str(self.score)), (560, 540), font, 1, (0, 255, 0), 2, cv.LINE_AA)
-        imgMain = cv.rectangle(imgMain, (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin), (self.backSize[0] // 2 + self.gameSize[0] // 2, 2 * self.margin + self.gameSize[1]), (0, 255, 0), 2)
-        return imgMain
-
-    def drawSquare(self, imgMain, position, fill=False):
-        n = self.gameSize[0] // self.numTile
-        i, j = position
-        
-        # تعیین مقدار اولیه برای رنگ
-        hue = self.score % 180  # مقدار حالت رنگ براساس امتیاز
-        
-        # افزایش یا کاهش مقدار حالت رنگ
-        hue += 1  # می‌توانید مقدار این تغییر را تنظیم کنید
-        
-        # تبدیل مقدار حالت رنگ به مقدار معتبر در فضای رنگ HSV (0-180)
-        hue = hue % 180
-        
-        # تبدیل مقدار حالت رنگ و مقادیر دیگر HSV به فضای رنگ BGR
-        color = cv.cvtColor(np.uint8([[[hue, 255, 255]]]), cv.COLOR_HSV2BGR)[0][0]
-        
-        # تبدیل مقدار رنگ به فرمت tuple برای استفاده در تابع cv.fillPoly
-        color = tuple(int(c) for c in color)
-
-        # تبدیل موقعیت بلوک به مختصات گوشه‌های مربع
-        x = 390 + n * i
-        y = 5 + n * j
-        x1, y1 = x + 1, y + 1
-        x2, y2 = x + n - 1, y + n - 1
-        
-        # ایجاد مربع
-        pts = np.array([(x1, y1), (x2, y1), (x2, y2), (x1, y2)], np.int32)
-        pts = pts.reshape((-1, 1, 2))
-        
-        # رسم مربع به عنوان یک چند ضلعی
-        cv.fillPoly(imgMain, [pts], color)
-        
-        if (self.high_score <= self.score):
-            self.high_score = self.score
-        i, j = position
-        n = self.gameSize[0] // self.numTile
         cv.putText(imgMain, str("Score : " + str(self.score)), (560, 540), font, 1, (0, 255, 0), 2, cv.LINE_AA)
         imgMain = cv.rectangle(imgMain,
                                 (self.backSize[0] // 2 - self.gameSize[0] // 2, 2 * self.margin),
                                 (self.backSize[0] // 2 + self.gameSize[0] // 2, 2 * self.margin + self.gameSize[1]),
                                 (0, 255, 0), 2)
+        return imgMain
+
+    def drawSnake(self, imgMain, points, color):
+        n = self.gameSize[0] // self.numTile
+        for i in range(len(points) - 1):
+            pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.2)))
+            pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.2)))
+            cv.line(imgMain, pt1, pt2, color, thickness=n)
         return imgMain
 
 game = SnakeGameClass()
