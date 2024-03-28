@@ -37,7 +37,7 @@ class SnakeGameClass:
         self.cap.set(3, 1280)
         self.cap.set(4, 720)
         self.imgMain = None
-        self.board = np.zeros((self.numTile, self.numTile), dtype=int)  # اضافه کردن صفحه بازی
+
     def start(self):
         x, y, w, h = 391, 10, 500, 541
         while True:
@@ -79,7 +79,10 @@ class SnakeGameClass:
 
         hx, hy = self.points[-1]
         if self.direction == 'l':
-            if hx - 1 < 0 or self.board[hy, hx - 1] == 1:  # بررسی برخورد مار با دیوار یا موانع
+            if hx - 1 < 0:
+                self.gameOver = True
+                return 0
+            elif (hx - 1, hy) in self.points:
                 self.gameOver = True
                 return 0
             elif (hx - 1, hy) == self.foodPoint:
@@ -90,7 +93,10 @@ class SnakeGameClass:
                 del self.points[0]
 
         elif self.direction == 'r':
-            if hx + 1 >= self.numTile or self.board[hy, hx + 1] == 1:  # بررسی برخورد مار با دیوار یا موانع
+            if hx + 1 >= self.numTile:
+                self.gameOver = True
+                return 0
+            elif (hx + 1, hy) in self.points:
                 self.gameOver = True
                 return 0
             elif (hx + 1, hy) == self.foodPoint:
@@ -101,7 +107,10 @@ class SnakeGameClass:
                 del self.points[0]
 
         elif self.direction == 'u':
-            if hy - 1 < 0 or self.board[hy - 1, hx] == 1:  # بررسی برخورد مار با دیوار یا موانع
+            if hy - 1 < 0:
+                self.gameOver = True
+                return 0
+            elif (hx, hy - 1) in self.points:
                 self.gameOver = True
                 return 0
             elif (hx, hy - 1) == self.foodPoint:
@@ -112,7 +121,10 @@ class SnakeGameClass:
                 del self.points[0]
 
         else:
-            if hy + 1 >= self.numTile or self.board[hy + 1, hx] == 1:  # بررسی برخورد مار با دیوار یا موانع
+            if hy + 1 >= self.numTile:
+                self.gameOver = True
+                return 0
+            elif (hx, hy + 1) in self.points:
                 self.gameOver = True
                 return 0
             elif (hx, hy + 1) == self.foodPoint:
@@ -135,8 +147,10 @@ class SnakeGameClass:
         foodSpace = []
         for i in range(self.numTile):
             for j in range(self.numTile):
-                if self.board[j, i] != 1 and (i, j) not in self.points:  # بررسی موقعیت های مناسب برای غذا
-                    foodSpace.append((i, j))
+                foodSpace.append((i, j))
+
+        for item in self.points:
+            foodSpace.remove(item)
 
         index = random.randrange(len(foodSpace))
         return foodSpace[index]
@@ -187,7 +201,7 @@ class SnakeGameClass:
         self.score = 0
         self.gameOver = False
         self.gameStart = False
-        self.board = np.zeros((self.numTile, self.numTile), dtype=int)  # بازنشانی صفحه بازی
+        self.high_score = max(self.high_score, self.score)  # ذخیره کردن بیشترین امتیاز
         return 0
 
     def displayGUI(self, imgMain):
@@ -227,3 +241,4 @@ class SnakeGameClass:
 
 game = SnakeGameClass()
 game.start()
+
