@@ -5,7 +5,6 @@ import mediapipe as mp
 import time
 
 font = cv.FONT_HERSHEY_DUPLEX
-
 class SnakeGameClass:
     def __init__(self):
         self.backSize = (1280, 1280)
@@ -25,12 +24,9 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
-
-        # خواندن تصویر با کانال آلفا (ترنسپرنت)
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
-        self.foodIcon = cv.resize(self.foodIcon, (20, 20))  # تغییر اندازه تصویر به اندازه مورد نظر
-        self.foodMask = self.foodIcon[:, :, 3]  # ماسک کانال آلفا
-
+        self.foodIcon = cv.resize(self.foodIcon, (20, 20)) 
+        self.foodMask = self.foodIcon[:, :, 3]
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
@@ -45,15 +41,12 @@ class SnakeGameClass:
             success, img = self.cap.read()
             img = cv.flip(img, 1)
             cropped_img = img[y:y+h, x:x+w]
-
             imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
             results = self.hands.process(imgRGB)
-
             if results.multi_hand_landmarks:
                 for handLMs in results.multi_hand_landmarks:
                     x_finger = int(handLMs.landmark[8].x * img.shape[1])
                     y_finger = int(handLMs.landmark[8].y * img.shape[0])
-
                     self.lastFinger = [x_finger, y_finger]
                     self.updateDirection()
                     self.gameStart = True
