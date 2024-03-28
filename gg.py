@@ -255,6 +255,14 @@ class SnakeGameClass:
             cv.rectangle(imgMain, (obstacle_x, obstacle_y), (obstacle_x + n, obstacle_y + n), (0, 0, 255), thickness)
 
         return imgMain
+    
+    def generateObstacles(self):
+        num_obstacles = 10  # تعداد موانع
+        for _ in range(num_obstacles):
+            obstacle_x = random.randint(0, self.numTile - 1)
+            obstacle_y = random.randint(0, self.numTile - 1)
+            # اضافه کردن موانع به لیست
+            self.obstacles.append((obstacle_x, obstacle_y))
 
 game = SnakeGameClass()
 game.start()
