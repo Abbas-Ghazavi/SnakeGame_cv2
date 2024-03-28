@@ -24,6 +24,7 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
+        self.zigzag_path = self.generate_zigzag_path(self.numTile)
 
         # خواندن تصویر با کانال آلفا (ترنسپرنت)
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
