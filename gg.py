@@ -202,7 +202,6 @@ class SnakeGameClass:
         self.score = 0
         self.gameOver = False
         self.gameStart = False
-        self.high_score = max(self.high_score, self.score)  # ذخیره کردن بیشترین امتیاز
         return 0
 
     def displayGUI(self, imgMain):
