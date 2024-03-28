@@ -24,8 +24,8 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
-        self.obstacles = []  # لیست موانع
-        self.generateObstacles()  # تولید موانع در ابتدای بازی
+        self.obstacles = []  # اضافه کردن ویژگی موانع
+        self.generateObstacles()
 
         # خواندن تصویر با کانال آلفا (ترنسپرنت)
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
