@@ -24,6 +24,8 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
+        self.obstacles = []  # لیست موانع
+        self.generateObstacles()  # تولید موانع در ابتدای بازی
 
         # خواندن تصویر با کانال آلفا (ترنسپرنت)
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
@@ -134,6 +136,10 @@ class SnakeGameClass:
                 self.points.append((hx, hy + 1))
                 del self.points[0]
 
+        # بررسی برخورد موانع با سر مار
+        if (hx, hy) in self.obstacles:
+            self.gameOver = True
+
         return 0
 
     def whenAteFood(self):
@@ -151,6 +157,11 @@ class SnakeGameClass:
 
         for item in self.points:
             foodSpace.remove(item)
+
+        # حذف موقعیت‌های موانع از فضای موجود برای غذا
+        for obstacle in self.obstacles:
+            if obstacle in foodSpace:
+                foodSpace.remove(obstacle)
 
         index = random.randrange(len(foodSpace))
         return foodSpace[index]
@@ -201,6 +212,8 @@ class SnakeGameClass:
         self.score = 0
         self.gameOver = False
         self.gameStart = False
+        self.obstacles = []  # پاک کردن موانع
+        self.generateObstacles()  # تولید موانع جدید در ابتدای هر بازی
         return 0
 
     def displayGUI(self, imgMain):
@@ -225,19 +238,23 @@ class SnakeGameClass:
     def drawSnake(self, imgMain, points, color):
         n = self.gameSize[0] // self.numTile
         thickness = n // 2  # تغییر اندازه مار
-        
+
         # رسم سر مار به صورت دایره‌ای
         head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
         cv.circle(imgMain, head_pt, thickness, color, thickness=-1)
-        
+
         # رسم بدن مار بدون فضای خالی
         for i in range(len(points) - 1):
             pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.5)))
             pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.5)))
             cv.line(imgMain, pt1, pt2, color, thickness=thickness)
-        
+
+        # رسم موانع به عنوان دیوارهای کوتاه
+        for obstacle in self.obstacles:
+            obstacle_x, obstacle_y = self.indexToPixel(obstacle)
+            cv.rectangle(imgMain, (obstacle_x, obstacle_y), (obstacle_x + n, obstacle_y + n), (0, 0, 255), thickness)
+
         return imgMain
 
 game = SnakeGameClass()
 game.start()
-
