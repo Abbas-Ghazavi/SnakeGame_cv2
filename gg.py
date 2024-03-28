@@ -196,6 +196,7 @@ class SnakeGameClass:
 
     def resetGame(self):
         self.lastFinger = [None, None]
+        self.points = self.zigzag_path[:]  # از مسیر زیگزاگی ایجاد شده استفاده می‌کنیم
         self.points = [(self.numTile // 2, self.numTile // 2)]
         self.length = 1
         self.foodPoint = self.randomFood()
