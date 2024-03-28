@@ -20,6 +20,7 @@ class SnakeGameClass:
         self.score = 0
         self.gameOver = False
         self.gameStart = False
+        self.high_score = 0
         self.direction = ''
         self.previousTime = time.time()
         self.currentTime = time.time()
@@ -212,7 +213,6 @@ class SnakeGameClass:
             x_food, y_food = self.indexToPixel(self.foodPoint)
             n = self.gameSize[0] // self.numTile
             imgMain[y_food:y_food + 20, x_food:x_food + 20] = self.foodIcon[:, :, :3] * (self.foodMask[:, :, None] / 255.0) + imgMain[y_food:y_food + 20, x_food:x_food + 20] * (1.0 - self.foodMask[:, :, None] / 255.0)
-
 
             imgMain = self.drawSnake(imgMain, self.points, (0, 255, 0))
 
