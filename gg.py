@@ -24,7 +24,6 @@ class SnakeGameClass:
         self.previousTime = time.time()
         self.currentTime = time.time()
         self.snakeSpeed = 0.20
-        self.zigzag_path = self.generate_zigzag_path(self.numTile)
 
         # خواندن تصویر با کانال آلفا (ترنسپرنت)
         self.foodIcon = cv.imread("food_icon.png", cv.IMREAD_UNCHANGED)
@@ -196,7 +195,6 @@ class SnakeGameClass:
 
     def resetGame(self):
         self.lastFinger = [None, None]
-        self.points = self.zigzag_path[:]  # از مسیر زیگزاگی ایجاد شده استفاده می‌کنیم
         self.points = [(self.numTile // 2, self.numTile // 2)]
         self.length = 1
         self.foodPoint = self.randomFood()
@@ -227,40 +225,24 @@ class SnakeGameClass:
     def drawSnake(self, imgMain, points, color):
         n = self.gameSize[0] // self.numTile
         thickness = n // 2  # تغییر اندازه مار
-        
-        # رسم سر مار به صورت دایره‌ای
-        head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(2 + n * (points[-1][1] + 0.5)))
-        cv.circle(imgMain, head_pt, thickness, color, thickness=-1)
-        
-        # رسم چشم‌ها
-        eye_radius = thickness // 4
-        eye1_center = (head_pt[0] - n // 4, head_pt[1] - n // 4)
-        eye2_center = (head_pt[0] + n // 4, head_pt[1] - n // 4)
-        cv.circle(imgMain, eye1_center, eye_radius, (0, 0, 0), thickness=-1)
-        cv.circle(imgMain, eye2_center, eye_radius, (0, 0, 0), thickness=-1)
-        
-        # رسم خنده
-        smile_center = (head_pt[0], head_pt[1] + n // 4)
-        cv.ellipse(imgMain, smile_center, (n // 4, n // 6), 0, 0, 180, (0, 0, 0), thickness=n // 8)
 
-        # رسم بدن مار بدون فضای خالی
         for i in range(len(points) - 1):
             pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.5)))
             pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.5)))
             cv.line(imgMain, pt1, pt2, color, thickness=thickness)
         
+        # جایگزینی چشم و دهان مار با الگوهای جدید
+        head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
+        eye_radius = n // 8
+        eye1_center = (head_pt[0] - n // 4, head_pt[1] - n // 4)
+        eye2_center = (head_pt[0] + n // 4, head_pt[1] - n // 4)
+        mouth_center = (head_pt[0], head_pt[1] + n // 3)
+        
+        cv.circle(imgMain, eye1_center, eye_radius, color, thickness=-1)
+        cv.circle(imgMain, eye2_center, eye_radius, color, thickness=-1)
+        cv.ellipse(imgMain, mouth_center, (n // 4, n // 6), 0, 0, 180, color, -1)
+        
         return imgMain
-    
-    def generate_zigzag_path(self, num_tiles):
-        path = []
-        for i in range(num_tiles):
-            if i % 2 == 0:
-                for j in range(num_tiles):
-                    path.append((i, j))
-            else:
-                for j in range(num_tiles-1, -1, -1):
-                    path.append((i, j))
-        return path
 
 game = SnakeGameClass()
 game.start()
