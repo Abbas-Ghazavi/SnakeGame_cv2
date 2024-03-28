@@ -223,6 +223,8 @@ class SnakeGameClass:
         return imgMain
 
     def drawSnake(self, imgMain, points, color):
+        if (self.high_score <= self.score):
+            self.high_score = self.score
         n = self.gameSize[0] // self.numTile
         thickness = n // 2  # تغییر اندازه مار
         
