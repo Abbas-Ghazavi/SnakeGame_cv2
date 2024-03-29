@@ -172,11 +172,14 @@ class SnakeGameClass:
         if abs(dx) >= abs(dy):
             if dx >= 0:
                 self.direction = 'r'
+                
             else:
                 self.direction = 'l'
+                
         else:
             if dy >= 0:
                 self.direction = 'd'
+                
             else:
                 self.direction = 'u'
         return 0
@@ -184,11 +187,9 @@ class SnakeGameClass:
     def indexToPixel(self, index):
 
         i, j = index
-
         n = self.gameSize[0] // self.numTile
 
         x_new = 390 + n * i + 1
-
         y_new = 5 + n * j + 1
 
         return x_new, y_new
