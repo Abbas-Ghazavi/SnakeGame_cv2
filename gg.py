@@ -225,7 +225,6 @@ class SnakeGameClass:
         head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
         cv.circle(imgMain, head_pt, thickness, color, thickness=-1)
         
-        # رسم بدن مار بدون فضای خالی
         for i in range(len(points) - 1):
             pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.5)))
             pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.5)))
