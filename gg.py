@@ -188,10 +188,8 @@ class SnakeGameClass:
 
         i, j = index
         n = self.gameSize[0] // self.numTile
-
         x_new = 390 + n * i + 1
         y_new = 5 + n * j + 1
-
         return x_new, y_new
 
     def isTimeToMoveSnake(self):
@@ -233,7 +231,6 @@ class SnakeGameClass:
         if (self.high_score <= self.score):
             self.high_score = self.score
         n = self.gameSize[0] // self.numTile
-        
         thickness = n // 2 
         head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
         cv.circle(imgMain, head_pt, thickness, color, thickness=-1)
