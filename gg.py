@@ -4,6 +4,7 @@ import cv2 as cv
 import mediapipe as mp
 import time
 font = cv.FONT_HERSHEY_DUPLEX
+
 class SnakeGameClass:
     def __init__(self):
         self.backSize = (1280, 1280)
@@ -42,6 +43,7 @@ class SnakeGameClass:
             cropped_img = img[y:y+h, x:x+w]
             imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
             results = self.hands.process(imgRGB)
+            
             if results.multi_hand_landmarks:
                 for handLMs in results.multi_hand_landmarks:
                     x_finger = int(handLMs.landmark[8].x * img.shape[1])
@@ -60,6 +62,7 @@ class SnakeGameClass:
             if key == ord('r'):
                 self.resetGame()
                 print('reset')
+                
             elif key == 27:
                 cv.destroyAllWindows()
                 self.cap.release()
@@ -218,15 +221,15 @@ class SnakeGameClass:
         if (self.high_score <= self.score):
             self.high_score = self.score
         n = self.gameSize[0] // self.numTile
+        
         thickness = n // 2 
         head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
         cv.circle(imgMain, head_pt, thickness, color, thickness=-1)
-        
+    
         for i in range(len(points) - 1):
             pt1 = (int(390 + n * (points[i][0] + 0.5)), int(5 + n * (points[i][1] + 0.5)))
             pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.5)))
             cv.line(imgMain, pt1, pt2, color, thickness=thickness)
-        
         return imgMain
 
 game = SnakeGameClass()
