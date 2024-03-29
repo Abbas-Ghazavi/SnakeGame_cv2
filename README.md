@@ -8,3 +8,13 @@ To run the game, simply execute the Python code and follow the instructions.
 
 ```bash
 python gg.py
+```
+# Requirements
+
+To run this game, you need the following dependencies:
+
+- Python 3.x
+- OpenCV (`cv2`)
+- NumPy
+- mediapipe
+
