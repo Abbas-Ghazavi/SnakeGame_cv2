@@ -78,12 +78,15 @@ class SnakeGameClass:
             if hx - 1 < 0:
                 self.gameOver = True
                 return 0
+                
             elif (hx - 1, hy) in self.points:
                 self.gameOver = True
                 return 0
+                
             elif (hx - 1, hy) == self.foodPoint:
                 self.whenAteFood()
                 return 0
+                
             else:
                 self.points.append((hx - 1, hy))
                 del self.points[0]
@@ -92,12 +95,15 @@ class SnakeGameClass:
             if hx + 1 >= self.numTile:
                 self.gameOver = True
                 return 0
+                
             elif (hx + 1, hy) in self.points:
                 self.gameOver = True
                 return 0
+                
             elif (hx + 1, hy) == self.foodPoint:
                 self.whenAteFood()
                 return 0
+                
             else:
                 self.points.append((hx + 1, hy))
                 del self.points[0]
@@ -106,9 +112,11 @@ class SnakeGameClass:
             if hy - 1 < 0:
                 self.gameOver = True
                 return 0
+                
             elif (hx, hy - 1) in self.points:
                 self.gameOver = True
                 return 0
+                
             elif (hx, hy - 1) == self.foodPoint:
                 self.whenAteFood()
                 return 0
@@ -120,12 +128,15 @@ class SnakeGameClass:
             if hy + 1 >= self.numTile:
                 self.gameOver = True
                 return 0
+                
             elif (hx, hy + 1) in self.points:
                 self.gameOver = True
                 return 0
+                
             elif (hx, hy + 1) == self.foodPoint:
                 self.whenAteFood()
                 return 0
+                
             else:
                 self.points.append((hx, hy + 1))
                 del self.points[0]
