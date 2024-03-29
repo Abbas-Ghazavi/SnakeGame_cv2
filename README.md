@@ -1,3 +1,9 @@
+
+#
+
+
+
+
 # Snake Game with Camera Control
 
 This is a simple snake game controlled using the computer's camera. In this game, the snake moves randomly on the screen and must eat random food. With each food eaten, your score increases, and you try to achieve a high score.
@@ -24,3 +30,4 @@ In this game, the computer's camera is used to detect hand movements. To start t
 # Key Points
   * To start the game, move your hand forward and let the snake start moving.
   * To control the snake's movement, move your hand in the opposite direction of the snake's movement.
+#
