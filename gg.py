@@ -3,7 +3,6 @@ import numpy as np
 import cv2 as cv
 import mediapipe as mp
 import time
-
 font = cv.FONT_HERSHEY_DUPLEX
 class SnakeGameClass:
     def __init__(self):
@@ -219,9 +218,7 @@ class SnakeGameClass:
         if (self.high_score <= self.score):
             self.high_score = self.score
         n = self.gameSize[0] // self.numTile
-        thickness = n // 2  # تغییر اندازه مار
-        
-        # رسم سر مار به صورت دایره‌ای
+        thickness = n // 2 
         head_pt = (int(390 + n * (points[-1][0] + 0.5)), int(5 + n * (points[-1][1] + 0.5)))
         cv.circle(imgMain, head_pt, thickness, color, thickness=-1)
         
