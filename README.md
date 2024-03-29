@@ -18,3 +18,9 @@ To run this game, you need the following dependencies:
 - NumPy
 - mediapipe
 
+# Description
+In this game, the computer's camera is used to detect hand movements. To start the game, you need to move your hand forward and control the snake's movement.
+
+# Key Points
+  * To start the game, move your hand forward and let the snake start moving.
+  * To control the snake's movement, move your hand in the opposite direction of the snake's movement.
