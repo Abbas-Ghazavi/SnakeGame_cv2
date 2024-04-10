@@ -240,7 +240,6 @@ class SnakeGameClass:
             pt2 = (int(390 + n * (points[i + 1][0] + 0.5)), int(5 + n * (points[i + 1][1] + 0.5)))
             cv.line(imgMain, pt1, pt2, color, thickness=thickness)
         return imgMain
-
 game = SnakeGameClass()
 game.start()
 
