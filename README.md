@@ -17,7 +17,7 @@ This is a simple snake game controlled using the computer's camera. In this game
 To run the game, simply execute the Python code and follow the instructions.
 
 ```bash
-python gg.py
+python Snake.py
 ```
 # Requirements
 
